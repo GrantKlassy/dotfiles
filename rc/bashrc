@@ -1,0 +1,66 @@
+##################
+# gklassy bashrc #
+##################
+
+[ -f /etc/bash_completion ] && source /etc/bash_completion
+[ -z "$PS1" ] && return
+
+# If a separate bash functions file exists, source it
+[ -f ~/.bash_functions ] && source ~/.bash_functions
+
+# Add some places to path
+PATH=$PATH:/usr/local/sbin:/usr/sbin
+
+###########
+# Aliases #
+###########
+
+# Color
+alias ls='ls -b --color'
+alias la='ls -lah --color'
+alias grep='grep --color=yes'
+
+# ssh
+alias sshcs='ssh gklassy@best-linux.cs.wisc.edu'
+alias ssht='ssh gklassy@best-tux.cae.wisc.edu'
+
+# Misc
+alias src='cd ~/src'
+alias h='history'
+alias m='mount | column -t | less -S'
+alias k='kubectl'
+alias reload='source ~/.bashrc'
+alias perms='stat -c "%a %A %G:%U %n" ./* | column -t'
+
+# History tweaks
+shopt -s histappend	# Append history
+HISTFILESIZE=1000	# Save more history
+HISTSIZE=1000		# Save more history
+
+# Terminal window title. Note this is also changed by vim (see ~/.vimrc)
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
+
+#######
+# PS1 #
+#######
+
+# NOTE: Use http://ezprompt.net/ for custom coloring
+
+# Uncolored prompt
+#export PS1="\u@\h \W \\$ "
+
+# Colored prompt with no git branch
+#export PS1="\[\e[1;33m\]\u\[\e[1;m\]@\[\e[1;31m\]\h\[\e[m\] \[\e[1;36m\]\W\[\e[m\] \[\e[1;36m\]\\$\[\e[m\] "
+
+# Colored prompt with git branch
+export PS1="\[\033[01;33m\]\u\[\033[01;37m\]@\[\033[01;31m\]\h \[\033[01;36m\]\W\$(parse_branch) \$ \[\033[00m\]"
+
+function parse_branch() {
+	# If we're in a git repo...
+	if git rev-parse --git-dir > /dev/null 2>&1; then
+		# Grab the current branch
+		BRANCH=$(git symbolic-ref --short -q HEAD)
+		# Print the info for our PS1
+		printf " {git: $BRANCH}"
+	fi
+}
