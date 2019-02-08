@@ -40,6 +40,19 @@ HISTSIZE=1000		# Save more history
 # Terminal window title. Note this is also changed by vim (see ~/.vimrc)
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
+# If there are no arguments, print the epoch time
+# If there are args, convert them from epoch time
+function epoch () {
+	if [[ $# -eq 0 ]]; then
+		date +%s
+	else
+		# Convert each arg
+		for arg in "$@"; do
+			date -d @${arg}
+		done
+	fi
+}
+
 #######
 # PS1 #
 #######
