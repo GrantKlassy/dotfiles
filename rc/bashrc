@@ -31,6 +31,11 @@ alias m='mount | column -t | less -S'
 alias k='kubectl'
 alias reload='source ~/.bashrc'
 alias perms='stat -c "%a %A %G:%U %n" ./* | column -t'
+function targz() {
+	CMD="tar cvzf ${1%%/}.tar.gz ${1%%/}/"
+	echo $CMD
+	eval $CMD
+}
 
 # History tweaks
 shopt -s histappend	# Append history
