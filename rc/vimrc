@@ -14,6 +14,7 @@ set cursorline			" Cursor line
 set ic				" Ignore case
 set title			" Set the terminal tab title
 set modeline			" Use modelines
+set nofoldenable		" Don't fold lines of code
 
 " Spelling
 set spellfile=~/.vim/spell/en.utf-8.add
