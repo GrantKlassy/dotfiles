@@ -20,10 +20,6 @@ alias ls='ls -b --color'
 alias la='ls -lah --color'
 alias grep='grep --color=yes'
 
-# ssh
-alias sshcs='ssh gklassy@best-linux.cs.wisc.edu'
-alias ssht='ssh gklassy@best-tux.cae.wisc.edu'
-
 # Misc
 alias src='cd ~/src'
 alias h='history'

@@ -47,15 +47,15 @@ autocmd BufNewFile,BufRead cf.* set filetype=cfengine
 """""""""""""""""""""""""""
 
 " Start vim-plug from plugged
-call plug#begin('~/.vim/plugged')
+" call plug#begin('~/.vim/plugged')
 
 " WHITESPACE
-Plug 'https://github.com/ntpeters/vim-better-whitespace'
+" Plug 'https://github.com/ntpeters/vim-better-whitespace'
 
 " LIGHT LINE
-Plug 'https://github.com/itchyny/lightline.vim'
-set laststatus=2
-let g:lightline = {'colorscheme': 'jellybeans'}
+" Plug 'https://github.com/itchyny/lightline.vim'
+" set laststatus=2
+" let g:lightline = {'colorscheme': 'jellybeans'}
 
 " LINT CHECKING
 "	Plug 'https://github.com/w0rp/ale'
@@ -75,7 +75,7 @@ let g:lightline = {'colorscheme': 'jellybeans'}
 "	Plug 'https://github.com/mustache/vim-mustache-handlebars'
 
 " List of vim-plug plugins ends here
-call plug#end()
+" call plug#end()
 
 """"""""""""""""""
 " EXTRA SETTINGS "
