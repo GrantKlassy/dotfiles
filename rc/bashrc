@@ -11,6 +11,22 @@
 # Add some places to path
 PATH=$PATH:/usr/local/sbin:/usr/sbin
 
+# Disable mouse acceleration
+MOUSEACCEL=$(defaults read .GlobalPreferences com.apple.mouse.scaling)
+if [[ "$MOUSEACCEL" != -1 ]]; then
+	defaults write .GlobalPreferences com.apple.mouse.scaling -1
+fi
+
+# Usage: lines 2  -> prints two blank lines
+#        lines 5  -> prints five blank lines
+lines() {
+  local n="${1:-1}"
+  [[ "$n" =~ ^[0-9]+$ ]] || { printf 'usage: lines <nonnegative integer>\n' >&2; return 2; }
+  for ((i = 0; i < n; i++)); do
+    printf '\n'
+  done
+}
+
 ###########
 # Aliases #
 ###########
