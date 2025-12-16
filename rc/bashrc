@@ -1,3 +1,29 @@
+# ------------------------------------------------------------
+# Detect macOS
+# ------------------------------------------------------------
+if [[ "$(uname -s)" == "Darwin" ]]; then
+    export RUNNING_ON_MAC=true
+else
+    export RUNNING_ON_MAC=false
+fi
+
+is_mac() {
+    [[ "$RUNNING_ON_MAC" == true ]]
+}
+
+if is_mac; then
+	bind '"\e[200~": paste-from-clipboard'
+	bind '"\e[201~": end-paste-from-clipboard'
+
+	MOUSEACCEL=$(defaults read .GlobalPreferences com.apple.mouse.scaling)
+	if [[ "$MOUSEACCEL" != -1 ]]; then
+		defaults write .GlobalPreferences com.apple.mouse.scaling -1
+	fi
+
+	eval "$(/opt/homebrew/bin/brew shellenv)"
+	export BASH_SILENCE_DEPRECATION_WARNING=1
+fi
+
 ##################
 # gklassy bashrc #
 ##################
@@ -8,14 +34,11 @@
 # If a separate bash functions file exists, source it
 [ -f ~/.bash_functions ] && source ~/.bash_functions
 
+# Git completion
+test -f ~/.git-completion.bash && . $_
+
 # Add some places to path
 PATH=$PATH:/usr/local/sbin:/usr/sbin
-
-# Disable mouse acceleration
-MOUSEACCEL=$(defaults read .GlobalPreferences com.apple.mouse.scaling)
-if [[ "$MOUSEACCEL" != -1 ]]; then
-	defaults write .GlobalPreferences com.apple.mouse.scaling -1
-fi
 
 # Usage: lines 2  -> prints two blank lines
 #        lines 5  -> prints five blank lines
@@ -93,4 +116,28 @@ function parse_branch() {
 		# Print the info for our PS1
 		printf " {git: $BRANCH}"
 	fi
+}
+
+# ------------------------------------------------------------
+# Set terminal title
+# Usage:
+#   set_title "TITLE"  -> sets static title
+#   set_title          -> reverts to default
+# ------------------------------------------------------------
+if [[ -z "${_ORIGINAL_PROMPT_COMMAND_SAVED}" ]]; then
+    _ORIGINAL_PROMPT_COMMAND_SAVED=1
+    ORIGINAL_PROMPT_COMMAND="$PROMPT_COMMAND"
+fi
+
+set_title() {
+    if [[ -z "$1" ]]; then
+        # revert to original behavior
+        if [[ -n "$ORIGINAL_PROMPT_COMMAND" ]]; then
+            PROMPT_COMMAND="$ORIGINAL_PROMPT_COMMAND"
+        else
+            unset PROMPT_COMMAND
+        fi
+    else
+        PROMPT_COMMAND="echo -ne '\033]0;$*\007'"
+    fi
 }
