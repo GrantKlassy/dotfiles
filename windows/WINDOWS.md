@@ -6,3 +6,4 @@
 - [ScreenToGif](https://www.screentogif.com/) - Screen recorder that saves as GIF or video
 - [StartAllBack](https://www.startallback.com/) - Restores classic Windows 11 taskbar/start menu
 - [TreeSize](https://www.jam-software.com/treesize) - Disk space analyzer
+- [BCUninstaller](https://www.bcuninstaller.com/) - Bulk program uninstaller
