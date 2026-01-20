@@ -15,3 +15,6 @@ The MAC.md and WINDOWS.md files use this format:
 
 ## Setup Script
 The repo includes a one-liner to pull down configs on new machines (see README.md).
+
+## Git Commit Messages
+Always use 1-3 words, all lowercase. No co-authored-by lines or lengthy descriptions.
