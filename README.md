@@ -1,11 +1,28 @@
-# linux-configs
-A repo to hold various linux configuration files (bashrc, vimrc) and other useful linux files. Built so that I have an easy way to pull down the configs I want when working on a new machine.
+# dotfiles
 
-## Usage
-To automatically pull down my bashrc and vimrc, you can either run
+Personal configuration files for setting up new machines quickly. Covers shell, editor, and OS-specific tooling across Linux, macOS, and Windows.
 
-`wget https://git.io/fNrNn -O /tmp/setup.sh && chmod +x /tmp/setup.sh && /tmp/setup.sh && rm /tmp/setup.sh`
+## What's Here
 
-... or if you like to like dangerously ...
+```
+rc/          bashrc, vimrc
+mac/         curated Mac program list
+windows/     curated Windows program list
+```
 
-`curl -s -L https://git.io/fNrNn | bash`
+### Shell (bashrc)
+
+- Cross-platform — detects macOS and adapts (Homebrew, bracketed paste, mouse accel fix)
+- Custom PS1 with git branch display
+- Utility functions: `epoch`, `targz`, `lines`, `set_title`
+- Aliases for color output, kubectl, history tweaks
+
+### Editor (vimrc)
+
+- Filetype detection for Terraform, YAML, Markdown, cfengine
+- Plugin manager (vim-plug) scaffolded with curated plugin list
+- Explicit indent control — no auto-indent surprises
+
+### Program Lists
+
+Curated lists of essential tools for [Mac](mac/MAC.md) and [Windows](windows/WINDOWS.md) workstations, each with a link and short description.
