@@ -9,7 +9,7 @@ parse_branch() {
 }
 
 # Colored prompt with git branch
-export PS1="\[\033[01;33m\]\u\[\033[01;37m\]@\[\033[01;31m\]\h \[\033[01;36m\]\W\$(parse_branch) \$ \[\033[00m\]"
+export PS1="★★★ \[\033[01;31m\]\u@\h\[\033[00m\] ★★★ \[\033[01;34m\]\W\[\033[00m\]\$(parse_branch) ★★★ \$ "
 
 # Terminal window title
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
