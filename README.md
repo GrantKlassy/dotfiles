@@ -5,17 +5,45 @@ Personal configuration files for setting up new machines quickly. Covers shell, 
 ## What's Here
 
 ```
-rc/          bashrc, vimrc
+bashrc.d/    drop-in shell fragments (aliases, functions, prompt, etc.)
+rc/          full reference configs (bashrc, vimrc)
+scripts/     setup script for deploying to a new machine
 mac/         curated Mac program list
 windows/     curated Windows program list
 ```
 
-### Shell (bashrc)
+### Shell (bashrc.d/)
 
-- Cross-platform — detects macOS and adapts (Homebrew, bracketed paste, mouse accel fix)
-- Custom PS1 with git branch display
-- Utility functions: `epoch`, `targz`, `lines`, `set_title`
-- Aliases for color output, kubectl, history tweaks
+Drop-in shell fragments that get sourced from `~/.bashrc` without replacing it. Each file is independent:
+
+- `aliases.sh` — color output, kubectl, misc shortcuts
+- `functions.sh` — `lines`, `targz`, `epoch`
+- `prompt.sh` — PS1 with git branch, `set_title`
+- `shell.sh` — history, PATH, completions
+- `macos.sh` — macOS-specific setup (no-op on Linux)
+
+The original `rc/bashrc` is kept as a full reference config.
+
+### Setup
+
+```bash
+git clone git@github.com-gk:GrantKlassy/dotfiles.git
+cd dotfiles
+
+# Preview what would change
+./scripts/setup.sh --dry-run
+
+# Deploy (backs up ~/.bashrc before modifying)
+./scripts/setup.sh
+
+# Overwrite existing drop-in files
+./scripts/setup.sh --force
+```
+
+The setup script:
+1. Copies `bashrc.d/*.sh` into `~/.bashrc.d/`
+2. Appends a sourcing block to `~/.bashrc` (idempotent, backs up first)
+3. Copies `rc/vimrc` to `~/.vimrc`
 
 ### Editor (vimrc)
 

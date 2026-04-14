@@ -8,6 +8,7 @@ tasks:
       - task: check:readme
       - task: check:license
       - task: check:history
+      - task: check:shell
 
   check:author:
     desc: Verify git identity is GrantKlassy
@@ -51,3 +52,27 @@ tasks:
           exit 1
         fi
         echo "OK: no Co-Authored-By contamination"
+
+  check:shell:
+    desc: Syntax-check and lint all shell scripts
+    cmds:
+      - |
+        ERRORS=0
+        for f in $(find bashrc.d scripts -name '*.sh' 2>/dev/null); do
+          if ! bash -n "$f" 2>&1; then
+            echo "FAIL: $f"
+            ERRORS=$((ERRORS + 1))
+          fi
+        done
+        if [ "$ERRORS" -gt 0 ]; then
+          echo "ERROR: $ERRORS file(s) have syntax errors"
+          exit 1
+        fi
+        echo "OK: all .sh files pass bash -n"
+      - |
+        if ! command -v shellcheck &>/dev/null; then
+          echo "WARN: shellcheck not installed, skipping (sudo dnf install ShellCheck)"
+          exit 0
+        fi
+        find bashrc.d scripts -name '*.sh' -exec shellcheck {} +
+        echo "OK: shellcheck passed"
