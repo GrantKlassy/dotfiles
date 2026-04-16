@@ -127,6 +127,7 @@ done
 if [[ " ${PACKAGES[*]} " == *" bash "* ]] && ! $UNSTOW; then
   echo "== .bashrc sourcing =="
 
+  # shellcheck disable=SC2016
   SOURCING_BLOCK='# Source drop-in configs
 if [ -d ~/.bashrc.d ]; then
   for f in ~/.bashrc.d/*.sh; do
@@ -134,6 +135,7 @@ if [ -d ~/.bashrc.d ]; then
   done
 fi'
 
+  # shellcheck disable=SC2016
   if [ ! -f ~/.bashrc ]; then
     if $DRY_RUN; then
       action "would create ~/.bashrc with sourcing block"
@@ -142,7 +144,7 @@ fi'
       action "created ~/.bashrc with sourcing block"
     fi
   elif grep -qE '(~|\$HOME)/\.bashrc\.d' ~/.bashrc; then
-    skip "~/.bashrc already sources ~/.bashrc.d/"
+    skip "$HOME/.bashrc already sources $HOME/.bashrc.d/"
   else
     if $DRY_RUN; then
       action "would back up ~/.bashrc and append sourcing block"
