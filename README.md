@@ -1,8 +1,8 @@
 # dotfiles
 
-My personal configs for shell, editor, and OS tooling across Linux, macOS, and Windows. First committed [July 31st 2018](https://github.com/GrantKlassy/dotfiles/commit/40716567f4ba9581121cddefa0df5dbc53ef6ac8) as "linux-configs".
+Originally committed [July 31st 2018](https://github.com/GrantKlassy/dotfiles/commit/40716567f4ba9581121cddefa0df5dbc53ef6ac8) as "linux-configs". This repo contains my personal configs for shell, editor, and OS tooling across Linux, macOS, and Windows.
 
-Managed with [GNU Stow](https://www.gnu.org/software/stow/) — each top-level directory is a stow package whose contents mirror `$HOME`.
+Managed with [GNU Stow](https://www.gnu.org/software/stow/) --- each top-level directory is a stow package whose contents mirror `$HOME`.
 
 ## Layout
 
