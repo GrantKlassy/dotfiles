@@ -13,7 +13,7 @@ pre-commit:
     - name: shell-syntax
       run: |
         ERRORS=0
-        for f in $(find bashrc.d scripts -name '*.sh' 2>/dev/null); do
+        for f in $(find bash scripts -name '*.sh' 2>/dev/null); do
           if ! bash -n "$f" 2>&1; then
             echo "FAIL: $f"
             ERRORS=$((ERRORS + 1))
@@ -31,7 +31,7 @@ pre-commit:
           echo "WARN: shellcheck not installed, skipping (sudo dnf install ShellCheck)"
           exit 0
         fi
-        find bashrc.d scripts -name '*.sh' -exec shellcheck {} +
+        find bash scripts -name '*.sh' -exec shellcheck {} +
         echo "OK: shellcheck passed"
 
 commit-msg:
