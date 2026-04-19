@@ -1,6 +1,6 @@
 # dotfiles
 
-Code last updated @ [2026-04-16](https://github.com/GrantKlassy/dotfiles/commit/f21dbbd033a6904360ccf77f5fd51ea876dbdc64)
+Code last updated @ [2026-04-19](https://github.com/GrantKlassy/dotfiles/commits/main)
 
 Originally committed [July 31st 2018](https://github.com/GrantKlassy/dotfiles/commit/40716567f4ba9581121cddefa0df5dbc53ef6ac8) as "linux-configs". This repo contains my personal configs for shell, editor, and OS tooling across Linux, macOS, and Windows.
 
