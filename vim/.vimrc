@@ -39,7 +39,7 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 " Markdown files
 autocmd BufNewFile,BufRead *.md set filetype=markdown
 
-" Python files (4-space indent, expand tabs — avoids TabError; matches Colab/CoderPad defaults)
+" Python files (4-space indent, expand tabs --- avoids TabError; matches Colab/CoderPad defaults)
 autocmd BufNewFile,BufRead *.py set filetype=python
 autocmd FileType python setlocal expandtab tabstop=4 softtabstop=4 shiftwidth=4 autoindent
 

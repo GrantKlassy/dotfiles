@@ -1,7 +1,7 @@
 version: "3"
 
 # Repo-local custom tasks (optional). Any Taskfile.local.yml in the repo root
-# is loaded under the `local:` namespace — e.g. `task local:ship`. Invoke the
+# is loaded under the `local:` namespace --- e.g. `task local:ship`. Invoke the
 # local `check` task (if defined) as part of the standard check fan-out.
 includes:
   local:
@@ -19,6 +19,7 @@ tasks:
       - task: check:last-updated
       - task: check:env-hygiene
       - task: check:gitignore-baseline
+      - task: check:no-emdash
       - cmd: |
           if [ -f Taskfile.local.yml ]; then
             task local:check
@@ -31,7 +32,7 @@ tasks:
       - |
         NAME=$(git config user.name)
         if [ "$NAME" != "GrantKlassy" ]; then
-          echo "ERROR: git user.name is '$NAME' — expected 'GrantKlassy'"
+          echo "ERROR: git user.name is '$NAME' --- expected 'GrantKlassy'"
           exit 1
         fi
         echo "OK: git user.name is GrantKlassy"
@@ -83,11 +84,31 @@ tasks:
     cmds:
       - ~/git/grantklassy/tools/rules/gitignore_baseline.sh .
 
+  check:no-emdash:
+    desc: Verify no U+2014 em dash in tracked files (AI-slop tell)
+    cmds:
+      - |
+        EMDASH_EXCLUDE=$(python3 ~/git/grantklassy/tools/lib/rules.py no-emdash-excludes "$(basename "$PWD")") \
+          ~/git/grantklassy/tools/rules/no_emdash.sh .
+
+  fix:emdash:
+    desc: Replace emdashes with '---' in staged files and re-stage (pre-commit flow)
+    cmds:
+      - |
+        EMDASH_SCOPE=staged FIX=1 \
+          EMDASH_EXCLUDE=$(python3 ~/git/grantklassy/tools/lib/rules.py no-emdash-excludes "$(basename "$PWD")") \
+          ~/git/grantklassy/tools/rules/no_emdash.sh .
+
   fix:badge:
-    desc: Write the README "Code last updated" badge and stage it (pre-commit flow — uses staged files to predict substantivity)
+    desc: Write the README "Code last updated" badge and stage it (pre-commit flow --- uses staged files to predict substantivity)
     cmds:
       - ~/git/grantklassy/tools/update-last-updated --pre-commit .
       - |
         if [ -f README.md ]; then
           git add README.md
         fi
+
+  dev:
+    desc: Run the repo-local dev task (defined in Taskfile.local.yml as `dev`)
+    cmds:
+      - task: local:dev
