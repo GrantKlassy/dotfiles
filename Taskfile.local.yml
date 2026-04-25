@@ -1,0 +1,60 @@
+version: "3"
+
+# Repo-local tasks for dotfiles. Loaded under `local:` namespace
+# by the standard Taskfile.yml. Invoke with `task local:<name>`.
+
+tasks:
+  check:
+    desc: Verify scripts/setup.sh exists and is executable
+    cmds:
+      - |
+        if [ ! -x scripts/setup.sh ]; then
+          echo "ERROR: scripts/setup.sh missing or not executable"
+          exit 1
+        fi
+        echo "OK: scripts/setup.sh is executable"
+
+  install:
+    desc: Install GNU Stow (dnf) if missing, then deploy every package
+    cmds:
+      - |
+        if ! command -v stow >/dev/null 2>&1; then
+          echo "stow not found --- installing via dnf"
+          sudo dnf install -y stow
+        fi
+      - ./scripts/setup.sh
+
+  dryrun:
+    desc: Preview what `task local:install` would do, without changing anything
+    cmds:
+      - ./scripts/setup.sh --dry-run
+
+  force:
+    desc: Deploy every package, replacing colliding regular files (timestamped .bak)
+    cmds:
+      - ./scripts/setup.sh --force
+
+  delete:
+    desc: Back up ~/.bashrc and ~/.vimrc to /tmp/dotfiles-backup-<ts>/, then unstow everything
+    cmds:
+      - |
+        BACKUP_DIR="/tmp/dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
+        mkdir -p "$BACKUP_DIR"
+        for f in "$HOME/.bashrc" "$HOME/.vimrc"; do
+          if [ -e "$f" ] || [ -L "$f" ]; then
+            if cp -L "$f" "$BACKUP_DIR/$(basename "$f")" 2>/dev/null; then
+              echo "backed up $f -> $BACKUP_DIR/$(basename "$f")"
+            else
+              echo "skip backup: $f (dangling symlink or unreadable)"
+            fi
+          fi
+        done
+        echo "backups in $BACKUP_DIR"
+      - ./scripts/setup.sh --uninstall
+      - |
+        for f in "$HOME/.bashrc" "$HOME/.vimrc"; do
+          if [ -e "$f" ] || [ -L "$f" ]; then
+            rm -f "$f"
+            echo "removed $f"
+          fi
+        done
