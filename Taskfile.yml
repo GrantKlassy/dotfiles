@@ -85,7 +85,7 @@ tasks:
       - ~/git/grantklassy/tools/rules/gitignore_baseline.sh .
 
   check:no-emdash:
-    desc: Verify no U+2014 em dash in tracked files (AI-slop tell)
+    desc: Verify no U+2014 em dash or named/numeric mdash HTML entity in tracked files (AI-slop tell)
     cmds:
       - |
         EMDASH_EXCLUDE=$(python3 ~/git/grantklassy/tools/lib/rules.py no-emdash-excludes "$(basename "$PWD")") \
