@@ -81,6 +81,14 @@ autocmd BufNewFile,BufRead cf.* set filetype=cfengine
 " List of vim-plug plugins ends here
 " call plug#end()
 
+""""""""""""
+" MAPPINGS "
+""""""""""""
+
+" Strip trailing whitespace in current buffer (\w)
+" Underlying command: :%s/\s\+$//e
+nnoremap <silent> <leader>w :%s/\s\+$//e<CR>
+
 """"""""""""""""""
 " EXTRA SETTINGS "
 """"""""""""""""""
